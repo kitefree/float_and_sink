@@ -1,5 +1,8 @@
 import MainScene from './Scenes/MainScene.js';
 
+
+
+
 var config = {
     type: Phaser.WEBGL,
     width: 1500,
