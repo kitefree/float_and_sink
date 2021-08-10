@@ -97,7 +97,7 @@ export default class MainScene extends Phaser.Scene {
 
         pic.mask = new Phaser.Display.Masks.BitmapMask(this, lense);
 
-        const magnify = this.add.image(1200, 600, 'magnify-out').setInteractive();
+        const magnify = this.add.image(200, 300, 'magnify-out').setInteractive();
 
 
         magnify.on('pointerdown', function () {
