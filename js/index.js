@@ -20,7 +20,14 @@ else {
 }
 
 var config = {
-    type: Phaser.WEBGL,
+    type: Phaser.AUTO,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        //parent: 'phaser-example',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: window.gWidth,
+        height: 700
+    },    
     width: window.gWidth,
     height: 700,
     backgroundColor: '#2d2d2d',
