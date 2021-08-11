@@ -13,7 +13,7 @@ gWidth = 0;
 
 if (isIPadDevice() == true)
 {
-    gWidth = 1200;
+    gWidth = 1000;
 }
 else {
     gWidth = 1500;
