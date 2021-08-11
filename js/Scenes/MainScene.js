@@ -22,11 +22,12 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('ruler_detail', 'assets/ruler_detail.png');
         this.load.image('magnify-out', 'assets/outside.png');
         this.load.image('magnify-in', 'assets/inside.png');
+        
 
         //this.load.spritesheet('www', 'assets/www.png', { frameWidth: 100, frameHeight: 20 });
     }
     create() {
-
+        
         let gSetting = (isIPadDevice() == true) ? TabletConfig : DesktopConfig;
         var platforms;
         var cube01;
@@ -56,8 +57,9 @@ export default class MainScene extends Phaser.Scene {
         var animate_water_down;
         var catch_magnify = false;
         var www;
-
-
+        window.txtSys;
+        
+        
         // www = this.physics.add.staticSprite(700, 555, 'www');
 
         // www.scaleX = 1;
@@ -152,7 +154,9 @@ export default class MainScene extends Phaser.Scene {
         weigh.setCollideWorldBounds(true);
         this.physics.add.collider(weigh, platforms);
 
-
+        window.txtSys = this.add.text(10, 10, `${window.screen.width} x ${window.screen.height}`);
+        window.txtSys.setFontSize('24px');
+        window.txtSys.setPadding(5, 5, 5, 5);
 
         //txtKG
         txtKG = self.add.text(gSetting.txtKG.x, gSetting.txtKG.y, gSetting.txtKG.defaultText);
@@ -352,7 +356,7 @@ export default class MainScene extends Phaser.Scene {
                     this.systems.game.scene.scenes[0].tweens.killAll();
                 }
                 else {
-                    isExpertCubeName =''
+                    isExpertCubeName = ''
                     object_where = ObjectWhere.default;
                     gameObject.body.setAllowGravity(true);
                 }
@@ -623,6 +627,12 @@ export default class MainScene extends Phaser.Scene {
 
     }
 
+    update(){
+        
+        
+        window.txtSys.setText(`${window.screen.width} x ${window.screen.height}`)
+        
+    }
 
 
 
