@@ -13,7 +13,7 @@ window.gWidth = 0;
 
 if (isIPadDevice() == true)
 {
-    window.gWidth = 1000;
+    window.gWidth = 1500;
 }
 else {
     window.gWidth = 1500;
