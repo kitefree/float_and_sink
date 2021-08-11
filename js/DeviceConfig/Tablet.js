@@ -112,7 +112,7 @@ const water = {
     color:0xd4f1f9
 }
 
-export const DesktopConfig = {
+export const TabletConfig = {
     cubes,
     platform,
     waterBox,
