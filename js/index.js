@@ -9,15 +9,15 @@ function isIPadDevice() {
     }
 }
 
-window.gWidth = 0;
+window.gWidth = 1500;
 
-if (isIPadDevice() == true)
-{
-    window.gWidth = 1500;
-}
-else {
-    window.gWidth = 1500;
-}
+// if (isIPadDevice() == true)
+// {
+//     window.gWidth = 1500;
+// }
+// else {
+//     window.gWidth = 1500;
+// }
 
 var config = {
     type: Phaser.AUTO,
