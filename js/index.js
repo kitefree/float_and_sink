@@ -9,19 +9,19 @@ function isIPadDevice() {
     }
 }
 
-gWidth = 0;
+window.gWidth = 0;
 
 if (isIPadDevice() == true)
 {
-    gWidth = 1000;
+    window.gWidth = 1000;
 }
 else {
-    gWidth = 1500;
+    window.gWidth = 1500;
 }
 
 var config = {
     type: Phaser.WEBGL,
-    width: gWidth,
+    width: window.gWidth,
     height: 700,
     backgroundColor: '#2d2d2d',
     //transparent: true, // 背景透明
