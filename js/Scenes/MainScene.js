@@ -7,6 +7,7 @@ export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' })
     }
+
     preload() {
 
         this.load.image('btnReset', 'assets/reset.png');
@@ -22,12 +23,13 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('ruler_detail', 'assets/ruler_detail.png');
         this.load.image('magnify-out', 'assets/outside.png');
         this.load.image('magnify-in', 'assets/inside.png');
-        
+
 
         //this.load.spritesheet('www', 'assets/www.png', { frameWidth: 100, frameHeight: 20 });
     }
+
     create() {
-        
+
         let gSetting = (isIPadDevice() == true) ? TabletConfig : DesktopConfig;
         var platforms;
         var cube01;
@@ -58,8 +60,8 @@ export default class MainScene extends Phaser.Scene {
         var catch_magnify = false;
         var www;
         window.txtSys;
-        
-        
+
+
         // www = this.physics.add.staticSprite(700, 555, 'www');
 
         // www.scaleX = 1;
@@ -121,32 +123,14 @@ export default class MainScene extends Phaser.Scene {
             key: 'magnify-in',
             add: false
         });
-
+        lense.name = 'lense';
         pic.mask = new Phaser.Display.Masks.BitmapMask(self, lense);
 
         const magnify = self.add.image(1200, 600, 'magnify-out').setInteractive();
-
-        event_reg();
-
-
-        function event_reg() {
-            magnify.on('pointerdown', function () {
-                catch_magnify = !catch_magnify;
-
-            });
-
-            self.input.on('pointermove', function (pointer) {
-                if (catch_magnify == true) {
-                    lense.x = pointer.x;
-                    lense.y = pointer.y;
-
-                    magnify.x = pointer.x;
-                    magnify.y = pointer.y;
-                }
+        magnify.name = 'magnify';
+        self.input.setDraggable(magnify);
 
 
-            });
-        }
 
         //秤重器
         weigh = self.physics.add.sprite(gSetting.weigh.x, gSetting.weigh.y, 'weigh');
@@ -303,70 +287,91 @@ export default class MainScene extends Phaser.Scene {
 
 
             this.systems.game.input.setCursor({ cursor: 'grabbing' });
-            if (gameObject.name == isExpertCubeName || isExpertCubeName == "") {
-                isExpertCubeName = "";
-                object_where = ObjectWhere.default;
-                //console.log(dragX, dragY);
-                gameObject.setAlpha(0.5);
-                gameObject.body.setAllowGravity(false);
-                gameObject.x = dragX;
-                gameObject.y = dragY;
-                txtCubeInfo.x = pointer.x;
-                txtCubeInfo.y = pointer.y;
-                txtKG.setText("0g");
-                txtKG.x = gSetting.txtKG.x;
-                display_tips(false);
+            if (gameObject.name == 'magnify') {
+                lense.x = dragX;
+                lense.y = dragY;
+
+                magnify.x = dragX;
+                magnify.y = dragY;
             }
             else {
-                display_tips(true);
+                if (gameObject.name == isExpertCubeName || isExpertCubeName == "") {
+                    isExpertCubeName = "";
+                    object_where = ObjectWhere.default;
+                    //console.log(dragX, dragY);
+                    gameObject.setAlpha(0.5);
+                    gameObject.body.setAllowGravity(false);
+                    gameObject.x = dragX;
+                    gameObject.y = dragY;
+                    txtCubeInfo.x = pointer.x;
+                    txtCubeInfo.y = pointer.y;
+                    txtKG.setText("0g");
+                    txtKG.x = gSetting.txtKG.x;
+                    display_tips(false);
+                }
+                else {
+                    display_tips(true);
+                }
             }
+
 
         });
 
         //drag end event
-        self.input.on('dragend', function (pointer, gameObject) {
+        self.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
             console.log(gameObject.x)
             console.log(gameObject.y)
 
-            //水缸起點、結束座標，碰撞邊修正
-            if (gameObject.x > 515 && gameObject.x < 570) {
-                gameObject.x = 700;
-            }
-            else if (gameObject.x > 840 && gameObject.x < 950) {
-                gameObject.x = 700;
-            }
-
-            if (gameObject.name == 'cube04') {
-
-                //實際水的起點、結束座標
-                if (gameObject.x > 588 && gameObject.x < 813) {
-                    isExpertCubeName = gameObject.name;
-                    object_where = ObjectWhere.water;
-                    cube04.body.stop();
-                    cube04.body.setAllowGravity(false);
-                    animate_04 = this.systems.game.scene.scenes[0].tweens.add({
-                        targets: cube04,
-                        y: 520,
-                        duration: 2000,
-                        ease: 'Back',
-                        easeParams: [2.5],
-                        delay: 10,
-
-                    });
-                    this.systems.game.scene.scenes[0].tweens.killAll();
-                }
-                else {
-                    isExpertCubeName = ''
-                    object_where = ObjectWhere.default;
-                    gameObject.body.setAllowGravity(true);
-                }
+            if (gameObject.name == 'magnify') {
+                lense.x = pointer.x;
+                lense.y = pointer.y;
+                magnify.x = pointer.x;
+                magnify.y = pointer.y;
+                this.systems.game.input.resetCursor({ cursor: 'true' });
             }
             else {
-                gameObject.body.setAllowGravity(true);
+                //水缸起點、結束座標，碰撞邊修正
+                if (gameObject.x > 515 && gameObject.x < 570) {
+                    gameObject.x = 700;
+                }
+                else if (gameObject.x > 840 && gameObject.x < 950) {
+                    gameObject.x = 700;
+                }
+
+                if (gameObject.name == 'cube04') {
+
+                    //實際水的起點、結束座標
+                    if (gameObject.x > 588 && gameObject.x < 813) {
+                        isExpertCubeName = gameObject.name;
+                        object_where = ObjectWhere.water;
+                        cube04.body.stop();
+                        cube04.body.setAllowGravity(false);
+                        animate_04 = this.systems.game.scene.scenes[0].tweens.add({
+                            targets: cube04,
+                            y: 520,
+                            duration: 2000,
+                            ease: 'Back',
+                            easeParams: [2.5],
+                            delay: 10,
+
+                        });
+                        this.systems.game.scene.scenes[0].tweens.killAll();
+                    }
+                    else {
+                        isExpertCubeName = ''
+                        object_where = ObjectWhere.default;
+                        gameObject.body.setAllowGravity(true);
+                    }
+                }
+                else {
+                    gameObject.body.setAllowGravity(true);
+                }
+                this.systems.game.input.resetCursor({ cursor: 'true' });
+                gameObject.clearAlpha();
+                update_water_info(gameObject);
+
             }
-            this.systems.game.input.resetCursor({ cursor: 'true' });
-            gameObject.clearAlpha();
-            update_water_info(gameObject);
+
         });
 
         function isIPadDevice() {
@@ -447,6 +452,7 @@ export default class MainScene extends Phaser.Scene {
 
             tween.parent.killTweensOf(rect_water);
         }
+
         function update_water_info(cube) {
 
             if (object_where == ObjectWhere.water) {
@@ -627,11 +633,10 @@ export default class MainScene extends Phaser.Scene {
 
     }
 
-    update(){
-        
-        
+    update() {
+
         window.txtSys.setText(`${window.screen.width} x ${window.screen.height}`)
-        
+
     }
 
 
