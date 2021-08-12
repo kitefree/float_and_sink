@@ -23,7 +23,10 @@ export default class StartScene extends Phaser.Scene {
         var btnStart;
         self.gSetting = (isIPadDevice() == true) ? TabletConfig : DesktopConfig;
         //世界座標中心
-        btnStart = this.add.image(self.gSetting.btnReset.x, self.gSetting.btnReset.y, 'btnStart').setInteractive();
+        
+        
+        //btnStart = this.add.image(self.gSetting.btnReset.x, self.gSetting.btnReset.y, 'btnStart').setInteractive();
+        btnStart = this.add.image(this.cameras.main.worldView.width/2, this.cameras.main.worldView.height/2, 'btnStart').setInteractive();
         btnStart.visible = true;
 
         btnStart.on('pointerover', function () {

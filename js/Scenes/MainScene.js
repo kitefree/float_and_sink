@@ -341,8 +341,8 @@ export default class MainScene extends Phaser.Scene {
 
         //drag end event
         self.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
-            //console.log(gameObject.x)
-            //console.log(gameObject.y)
+            console.log(gameObject.x)
+            console.log(gameObject.y)
 
             if (gameObject.name == 'magnify') {
                 lense.x = pointer.x;
@@ -352,6 +352,13 @@ export default class MainScene extends Phaser.Scene {
                 this.systems.game.input.resetCursor({ cursor: 'true' });
             }
             else {
+
+                //提升體驗 秤重左、右邊邊框座標
+                if (gameObject.x > 1000 && gameObject.x < 1350 && gameObject.y < 317) {
+                    gameObject.x = 1200;
+                    gameObject.y = 150;
+                }
+
 
                 //提升體驗 水缸左、右邊邊框座標
                 if (gameObject.x > 515 && gameObject.x < 570) {
