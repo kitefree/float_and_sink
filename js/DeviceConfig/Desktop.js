@@ -111,6 +111,14 @@ const water = {
     height:500,
     color:0xd4f1f9
 }
+const water_ruler = {
+    x:955,
+    y:water.y,
+    width:65,
+    height:water.height,
+    color:water.color
+}
+
 
 export const DesktopConfig = {
     cubes,
@@ -124,4 +132,5 @@ export const DesktopConfig = {
     txtOpTips,
     txtCubeInfo,
     water,
+    water_ruler,
 }
