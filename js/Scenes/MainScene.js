@@ -354,7 +354,7 @@ export default class MainScene extends Phaser.Scene {
             else {
 
                 //提升體驗 秤重左、右邊邊框座標
-                if (gameObject.x > 1000 && gameObject.x < 1350 && gameObject.y < 317) {
+                if (gameObject.x > 1120 && gameObject.x < 1270 && gameObject.y > 217 && gameObject.y < 317) {
                     gameObject.x = 1200;
                     gameObject.y = 150;
                 }
