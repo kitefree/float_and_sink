@@ -1,4 +1,5 @@
 import MainScene from './Scenes/MainScene.js';
+import StartScene from './Scenes/StartScene.js';
 
 function isIPadDevice() {
     if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -42,6 +43,6 @@ var config = {
             // debug: true
         }
     },
-    scene: [MainScene]
+    scene: [StartScene,MainScene]
 };
 var game = new Phaser.Game(config);
