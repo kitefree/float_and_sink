@@ -370,7 +370,8 @@ export default class MainScene extends Phaser.Scene {
 
                         self.cube04.body.stop();
                         self.cube04.body.setAllowGravity(false);
-                        this.systems.game.scene.scenes[0].tweens.add({
+                        self.sys.tweens.add({
+                        //this.systems.game.scene.scenes[0].tweens.add({
                             targets: self.cube04,
                             y: 520,
                             duration: 1500,
@@ -379,8 +380,8 @@ export default class MainScene extends Phaser.Scene {
                             delay: 8,
 
                         });
-                        
-                        this.systems.game.scene.scenes[0].tweens.killAll();
+                        self.sys.tweens.killAll();
+                        //this.systems.game.scene.scenes[0].tweens.killAll();
 
                     }
                     else {
