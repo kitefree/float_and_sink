@@ -43,6 +43,6 @@ var config = {
             // debug: true
         }
     },
-    scene: [StartScene,MainScene]
+    scene: [MainScene]
 };
 var game = new Phaser.Game(config);
