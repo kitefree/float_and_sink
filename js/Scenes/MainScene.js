@@ -19,6 +19,7 @@ export default class MainScene extends Phaser.Scene {
     rect_water_ruler = null;
     onCompleteHandler = null;
     add_water_height = null;
+    isDisplayTips = false;
 
     add_water_height = (self, add_h) => {
         return self.gSetting.water.y - add_h;
@@ -50,6 +51,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('ruler_detail', 'assets/ruler_detail.png');
         this.load.image('magnify-out', 'assets/outside.png');
         this.load.image('magnify-in', 'assets/inside.png');
+        this.load.image('restart', 'assets/restart.png');
 
 
         //this.load.spritesheet('www', 'assets/www.png', { frameWidth: 100, frameHeight: 20 });
@@ -76,21 +78,17 @@ export default class MainScene extends Phaser.Scene {
         self.GetBounds = Phaser.Display.Bounds.GetBounds;
         self.Rectangle = Phaser.Geom.Rectangle;
         self.rect1 = new self.Rectangle();
-        self.rect2 = new self.Rectangle();        
-        var btnReset;        
+        self.rect2 = new self.Rectangle();
+        var btnReset;
         window.txtSys;
+        var btnRestart;
 
-
-        // www = this.physics.add.staticSprite(700, 555, 'www');
-
-        // www.scaleX = 1;
-
-        // this.anims.create({
-        //     key: 'right',
-        //     frames: this.anims.generateFrameNumbers('www', { start: 0, end: 8 }),
-        //     frameRate: 15,
-        //     repeat: 0
-        // });
+        btnRestart = this.physics.add.staticSprite(1450, 50, 'restart').setScale(.4,.4).setInteractive();
+        btnRestart.on('pointerdown', function () {
+            reset_game();
+            
+            this.scene.sys.game.input.resetCursor({ cursor: 'true' });
+        });
 
         //重玩
         btnReset = this.add.image(self.gSetting.btnReset.x, self.gSetting.btnReset.y, 'btnReset').setInteractive();
@@ -106,6 +104,7 @@ export default class MainScene extends Phaser.Scene {
             this.scene.sys.game.input.resetCursor({ cursor: 'true' });
         });
         btnReset.on('pointerdown', function () {
+
             reset_game();
             this.scene.sys.game.input.resetCursor({ cursor: 'true' });
         });
@@ -317,6 +316,7 @@ export default class MainScene extends Phaser.Scene {
                 magnify.y = dragY;
             }
             else {
+
                 if (gameObject.name == self.isExpertCubeName || self.isExpertCubeName == "") {
                     self.isExpertCubeName = "";
                     self.object_where = self.ObjectWhere.default;
@@ -331,7 +331,7 @@ export default class MainScene extends Phaser.Scene {
                     txtKG.x = self.gSetting.txtKG.x;
                     display_tips(false);
                 }
-                else {
+                else { 
                     display_tips(true);
                 }
             }
@@ -370,17 +370,18 @@ export default class MainScene extends Phaser.Scene {
 
                 if (gameObject.name == 'cube04') {
 
-                    //實際水的起點、結束座標
+                    //在水缸有效範圍內
+                    //實際水缸的起點、結束座標
                     if (gameObject.x > 588 && gameObject.x < 813) {
-                        
-                        self.isExpertCubeName = gameObject.name;
 
-                        self.cube04.body.stop();
+                        self.isExpertCubeName = gameObject.name;
+                        self.object_where = self.ObjectWhere.water;
+                        
                         self.cube04.body.setAllowGravity(false);
                         self.sys.tweens.add({
-                        //this.systems.game.scene.scenes[0].tweens.add({
+                            //this.systems.game.scene.scenes[0].tweens.add({
                             targets: self.cube04,
-                            y: 520,
+                            y: 530,
                             duration: 1500,
                             ease: 'Back',
                             easeParams: [2.5],
@@ -389,10 +390,11 @@ export default class MainScene extends Phaser.Scene {
                         });
                         self.sys.tweens.killAll();
                         //this.systems.game.scene.scenes[0].tweens.killAll();
-
+              
                     }
                     else {
-                        self.isExpertCubeName = ''
+                        console.log('cub04 clear isExpertCubeName');
+                        self.isExpertCubeName = '';
                         self.object_where = self.ObjectWhere.default;
                         gameObject.body.setAllowGravity(true);
                     }
@@ -402,9 +404,28 @@ export default class MainScene extends Phaser.Scene {
                 }
 
 
+                if(self.isExpertCubeName == '')
+                {
+                    cube01.input.draggable = true;
+                    cube02.input.draggable = true;
+                    cube03.input.draggable = true;
+                    self.cube04.input.draggable = true;
+                }
+                else if(gameObject.name == 'cube04')
+                {
+                    cube01.input.draggable = true;
+                    cube02.input.draggable = true;
+                    cube03.input.draggable = true;
+                }
+
                 this.systems.game.input.resetCursor({ cursor: 'true' });
                 gameObject.clearAlpha();
-                update_water_info(gameObject);
+                
+                if(self.isDisplayTips == false)
+                {
+                    update_water_info(gameObject);
+                }
+                
 
             }
 
@@ -452,6 +473,11 @@ export default class MainScene extends Phaser.Scene {
         };
 
         function reset_game() {
+
+            self.registry.destroy(); // destroy registry
+            self.events.off(); // disable all active events
+            self.scene.restart(); // restart current scene
+
             cube01.x = self.gSetting.cubes.cube01.x; cube01.y = self.gSetting.cubes.cube01.y;
             cube02.x = self.gSetting.cubes.cube02.x; cube02.y = self.gSetting.cubes.cube02.y;
             cube03.x = self.gSetting.cubes.cube03.x; cube03.y = self.gSetting.cubes.cube03.y;
@@ -473,9 +499,44 @@ export default class MainScene extends Phaser.Scene {
 
 
         function display_tips(isShow = false) {
+            self.isDisplayTips = isShow;
             if (isShow == true) {
+                if(cube01.name != self.isExpertCubeName)
+                {
+                    cube01.input.draggable = false;
+                }
+                else {
+                    cube01.input.draggable = true;
+                }
+
+                if(cube02.name != self.isExpertCubeName)
+                {
+                    cube02.input.draggable = false;
+                }
+                else {
+                    cube02.input.draggable = true;
+                }
+
+                if(cube03.name != self.isExpertCubeName)
+                {
+                    cube03.input.draggable = false;
+                }
+                else {
+                    cube03.input.draggable = true;
+                }
+
+                if(self.cube04.name != self.isExpertCubeName)
+                {
+                    self.cube04.input.draggable = false;
+                }
+                else {
+                    self.cube04.input.draggable = true;
+                }
+
+
                 txtOpTips.setText("請先將物體移動回架上");
                 btnReset.visible = true;
+
             }
             else {
                 txtOpTips.setText("");
@@ -487,21 +548,23 @@ export default class MainScene extends Phaser.Scene {
 
 
         function update_water_info(cube) {
-
+            console.log('update_water_info be:',self.object_where);
             if (self.object_where == self.ObjectWhere.water) {
+                console.log(' update_water_info isExpertCubeName :',cube.name);
+                self.isExpertCubeName = cube.name;
                 return;
             }
-
+            console.log('update_water_info af 1:',self.object_where);
             if (cube.name == 'cube01') {
                 self.GetBounds(cube01, self.rect1);
                 self.GetBounds(self.rect_water, self.rect2);
 
                 if (self.RectangleToRectangle(self.rect1, self.rect2)) {
 
-                    if (self.rect_water.y == self.gSetting.water.y) {
+                    self.object_where = self.ObjectWhere.water;
+                    self.isExpertCubeName = cube.name;
 
-                        self.object_where = self.ObjectWhere.water;
-                        self.isExpertCubeName = cube.name;
+                    if (self.rect_water.y == self.gSetting.water.y) {
 
                         self.tweens.add({
 
@@ -516,9 +579,10 @@ export default class MainScene extends Phaser.Scene {
 
                 }
                 else {
-
+                    
                     self.object_where = self.ObjectWhere.default;
                     self.isExpertCubeName = '';
+                    console.log('cube01 clear isExpertCubeName');
 
                     self.tweens.add({
 
@@ -537,10 +601,10 @@ export default class MainScene extends Phaser.Scene {
 
                 if (self.RectangleToRectangle(self.rect1, self.rect2)) {
 
-                    if (self.rect_water.y == self.gSetting.water.y) {
+                    self.object_where = self.ObjectWhere.water;
+                    self.isExpertCubeName = cube.name;
 
-                        self.object_where = self.ObjectWhere.water;
-                        self.isExpertCubeName = cube.name;
+                    if (self.rect_water.y == self.gSetting.water.y) {
 
                         self.tweens.add({
 
@@ -576,10 +640,11 @@ export default class MainScene extends Phaser.Scene {
 
                 if (self.RectangleToRectangle(self.rect1, self.rect2)) {
 
+                    self.object_where = self.ObjectWhere.water;
+                    self.isExpertCubeName = cube.name;
+
                     if (self.rect_water.y == self.gSetting.water.y) {
 
-                        self.object_where = self.ObjectWhere.water;
-                        self.isExpertCubeName = cube.name;
 
                         self.tweens.add({
 
@@ -611,14 +676,15 @@ export default class MainScene extends Phaser.Scene {
             }
             else if (cube.name == 'cube04') {
 
-                if (cube.x < 588 || cube.x > 813) {
+                if ((cube.x < 588 || cube.x > 813) && self.isDisplayTips == false) {
 
                     self.object_where = self.ObjectWhere.default;
                     self.isExpertCubeName = '';
+                    console.log('cube04 clear 2 isExpertCubeName');
 
                     self.tweens.add({
 
-                        targets: [self.rect_water,self.rect_water_ruler],
+                        targets: [self.rect_water, self.rect_water_ruler],
                         y: self.gSetting.water.y,
                         ease: 'Power2',
                         duration: 500,
@@ -688,7 +754,9 @@ export default class MainScene extends Phaser.Scene {
 
     update() {
 
-        window.txtSys.setText(`${window.screen.width} x ${window.screen.height}`)
+        window.txtSys.setText(`${window.screen.width} x ${window.screen.height}`);
+        window.txtSys.setText(this.isExpertCubeName);
+        
         //console.log('update isExpertCubeName:', this.isExpertCubeName)
         if (this.isExpertCubeName == 'cube04') {
 
@@ -714,6 +782,8 @@ export default class MainScene extends Phaser.Scene {
                         duration: 500,
                         onComplete: this.onCompleteHandler,
                     });
+
+                    
                     //console.log('update RectangleToRectangle');
                 }
 
