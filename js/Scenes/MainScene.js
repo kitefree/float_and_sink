@@ -193,60 +193,42 @@ export default class MainScene extends Phaser.Scene {
         //weigh.body.checkCollision.right = false;
 
         //cube01
-        cube01 = self.physics.add.sprite(self.gSetting.cubes.cube01.x, self.gSetting.cubes.cube01.y, 'cube_template');
-        cube01.setBounce(0);
-        cube01.setDepth(-2);
-        cube01.setCollideWorldBounds(true);
+        cube01 = self.physics.add.sprite(self.gSetting.cubes.cube01.x, self.gSetting.cubes.cube01.y, 'cube_template');        
         cube01.name = "cube01";
-        self.physics.add.collider(cube01, platforms);
-        self.physics.add.collider(cube01, self.weigh, weight_event, null, self);
-        self.physics.add.collider(cube01, self.box_down_side, boxDownSide_event, null, self);
-        cube01.setInteractive();
-        self.input.setDraggable(cube01);
-
+        
 
         //cube02
-        cube02 = self.physics.add.sprite(self.gSetting.cubes.cube02.x, self.gSetting.cubes.cube02.y, 'cube_template');
-        cube02.setBounce(0);
-        cube02.setDepth(-2);
-        cube02.setCollideWorldBounds(true);
+        cube02 = self.physics.add.sprite(self.gSetting.cubes.cube02.x, self.gSetting.cubes.cube02.y, 'cube_template');        
         cube02.name = "cube02";
-        self.physics.add.collider(cube02, platforms);
-        self.physics.add.collider(cube02, self.weigh, weight_event, null, self);
-        self.physics.add.collider(cube02, self.box_down_side, boxDownSide_event, null, self);
-        cube02.setInteractive();
-        self.input.setDraggable(cube02);
+
 
         //cube03
-        cube03 = self.physics.add.sprite(self.gSetting.cubes.cube03.x, self.gSetting.cubes.cube03.y, 'cube_template');
-        cube03.setBounce(0);
-        cube03.setDepth(-2);
-        cube03.setCollideWorldBounds(true);
+        cube03 = self.physics.add.sprite(self.gSetting.cubes.cube03.x, self.gSetting.cubes.cube03.y, 'cube_template');        
         cube03.name = "cube03";
-        self.physics.add.collider(cube03, platforms);
-        self.physics.add.collider(cube03, self.weigh, weight_event, null, self);
-        self.physics.add.collider(cube03, self.box_down_side, boxDownSide_event, null, self);
-        cube03.setInteractive();
-        self.input.setDraggable(cube03);
+        
 
         //cube04
-        self.cube04 = self.physics.add.sprite(self.gSetting.cubes.cube04.x, self.gSetting.cubes.cube04.y, 'cube_template');
-        self.cube04.setBounce(0);
-        self.cube04.setDepth(-2);
-        self.cube04.setCollideWorldBounds(true);
+        self.cube04 = self.physics.add.sprite(self.gSetting.cubes.cube04.x, self.gSetting.cubes.cube04.y, 'cube_template');        
         self.cube04.name = "cube04";
-        self.physics.add.collider(self.cube04, platforms);
-        self.physics.add.collider(self.cube04, self.weigh, weight_event, null, self);
-        self.physics.add.collider(self.cube04, self.box_down_side, boxDownSide_event, null, self);
-        self.cube04.setInteractive();
-        self.input.setDraggable(self.cube04);
-
+        
 
         self.arrCubes.push(cube01);
         self.arrCubes.push(cube02);
         self.arrCubes.push(cube03);
         self.arrCubes.push(self.cube04);
         self.arrCubes.forEach(function (cube) {
+            
+            cube.setBounce(0);
+            cube.setDepth(-2);
+            cube.setCollideWorldBounds(true);
+            
+            self.physics.add.collider(cube, platforms);
+            self.physics.add.collider(cube, self.weigh, weight_event, null, self);
+            self.physics.add.collider(cube, self.box_down_side, boxDownSide_event, null, self);
+            cube.setInteractive();
+            self.input.setDraggable(cube);
+
+
             cube.on('pointerover', function (pointer, locX, locY) {                
                 display_cube_tips(true, cube.name, pointer);
             });
@@ -491,15 +473,13 @@ export default class MainScene extends Phaser.Scene {
             self.registry.destroy(); // destroy registry
             self.events.off(); // disable all active events
             self.scene.restart(); // restart current scene
-
-            cube01.x = self.gSetting.cubes.cube01.x; cube01.y = self.gSetting.cubes.cube01.y;
-            cube02.x = self.gSetting.cubes.cube02.x; cube02.y = self.gSetting.cubes.cube02.y;
-            cube03.x = self.gSetting.cubes.cube03.x; cube03.y = self.gSetting.cubes.cube03.y;
-            self.cube04.x = self.gSetting.cubes.cube04.x; self.cube04.y = self.gSetting.cubes.cube04.y;
-            cube01.body.setAllowGravity(true);
-            cube02.body.setAllowGravity(true);
-            cube03.body.setAllowGravity(true);
-            self.cube04.body.setAllowGravity(true);
+            
+            self.arrCubes.forEach(function (cube) {
+                cube.x = self.gSetting["cubes"][cube.name].x;
+                cube.y = self.gSetting["cubes"][cube.name].y;
+                cube.body.setAllowGravity(true);
+            });
+            self.arrCubes = [];            
             self.isExpertCubeName = '';
             self.object_where = self.ObjectWhere.default;
             txtKG.setText('0g');
