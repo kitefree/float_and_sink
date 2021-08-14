@@ -5,6 +5,7 @@ import { DesktopConfig } from '../DeviceConfig/Desktop.js';
 export default class MainScene extends Phaser.Scene {
 
     cube04 = null;
+    arrCubes = [];
     rect1 = null;
     rect2 = null;
     isExpertCubeName = "";
@@ -80,9 +81,9 @@ export default class MainScene extends Phaser.Scene {
         self.Rectangle = Phaser.Geom.Rectangle;
         self.rect1 = new self.Rectangle();
         self.rect2 = new self.Rectangle();
-        
+
         var btnReset;
-        
+
         var btnRestart;
 
         btnRestart = this.physics.add.staticSprite(1450, 50, 'restart').setScale(.4, .4).setInteractive();
@@ -240,45 +241,19 @@ export default class MainScene extends Phaser.Scene {
         self.cube04.setInteractive();
         self.input.setDraggable(self.cube04);
 
-        cube01.on('pointerover', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(true, self.name, pointer);
 
-        });
+        self.arrCubes.push(cube01);
+        self.arrCubes.push(cube02);
+        self.arrCubes.push(cube03);
+        self.arrCubes.push(self.cube04);
+        self.arrCubes.forEach(function (cube) {
+            cube.on('pointerover', function (pointer, locX, locY) {                
+                display_cube_tips(true, cube.name, pointer);
+            });
 
-        cube01.on('pointerout', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(false, self.name, pointer);
-        });
-
-        cube02.on('pointerover', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(true, self.name, pointer);
-        });
-
-        cube02.on('pointerout', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(false, self.name, pointer);
-        });
-
-        cube03.on('pointerover', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(true, self.name, pointer);
-        });
-
-        cube03.on('pointerout', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(false, self.name, pointer);
-        });
-
-        self.cube04.on('pointerover', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(true, self.name, pointer);
-        });
-
-        self.cube04.on('pointerout', function (pointer, locX, locY) {
-            var self = this;
-            display_cube_tips(false, self.name, pointer);
+            cube.on('pointerout', function (pointer, locX, locY) {                
+                display_cube_tips(false, cube.name, pointer);
+            });
         });
 
 
@@ -346,7 +321,7 @@ export default class MainScene extends Phaser.Scene {
         });
 
         //drag end event
-        self.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
+        self.input.on('dragend', function (pointer, gameObject) {
 
             self.isDragging = false;
 
@@ -400,7 +375,14 @@ export default class MainScene extends Phaser.Scene {
                 if (self.RectangleToRectangle(self.rect1, self.rect2)) {
                     gameObject.x = 700;
                     gameObject.y = 590;
-                }                
+                }
+
+                console.log('x1:', gameObject.x);
+                console.log('x2:', gameObject.x + gameObject.width);
+
+                if (gameObject.x > 588 && gameObject.x < 813) {
+
+                }
 
                 if (gameObject.name == 'cube04') {
 
@@ -576,13 +558,13 @@ export default class MainScene extends Phaser.Scene {
 
 
         function update_water_info(cube) {
-            console.log('update_water_info be:', self.object_where);
+            //console.log('update_water_info be:', self.object_where);
             if (self.object_where == self.ObjectWhere.water) {
-                console.log(' update_water_info isExpertCubeName :', cube.name);
+                //console.log(' update_water_info isExpertCubeName :', cube.name);
                 self.isExpertCubeName = cube.name;
                 return;
             }
-            console.log('update_water_info af 1:', self.object_where);
+            //console.log('update_water_info af 1:', self.object_where);
             if (cube.name == 'cube01') {
                 self.GetBounds(cube01, self.rect1);
                 self.GetBounds(self.rect_water, self.rect2);
@@ -773,11 +755,10 @@ export default class MainScene extends Phaser.Scene {
         }
 
         function boxDownSide_event(cube, b) {
-            if(self.isDragging == false)
-            {
+            if (self.isDragging == false) {
                 update_water_info(cube);
             }
-            
+
         }
 
 
