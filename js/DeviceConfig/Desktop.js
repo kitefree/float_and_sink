@@ -4,21 +4,25 @@ const cubes = {
         x: 100,
         y: 250,
         weight:'140g',
+        water_height:80,
     },
     cube02: {
         x: 300,
         y: 250,
         weight:'240g',
+        water_height:60,
     },
     cube03: {
         x: 300,
         y: 520,
         weight:'980g',
+        water_height:40,
     },
     cube04: {
         x: 100,
         y: 520,
         weight:'100g',
+        water_height:20,
     }
 }
 
