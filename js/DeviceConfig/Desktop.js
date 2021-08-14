@@ -2,19 +2,23 @@
 const cubes = {
     cube01: {
         x: 100,
-        y: 250
+        y: 250,
+        weight:'140g',
     },
     cube02: {
         x: 300,
-        y: 250
+        y: 250,
+        weight:'240g',
     },
     cube03: {
         x: 300,
-        y: 520
+        y: 520,
+        weight:'980g',
     },
     cube04: {
         x: 100,
-        y: 520
+        y: 520,
+        weight:'100g',
     }
 }
 

@@ -676,37 +676,12 @@ export default class MainScene extends Phaser.Scene {
 
             //console.log(cube.y);
             let cube_touch_y = 204;
-            if (cube === cube01) {
-                if (parseInt(cube.y) == cube_touch_y) {
-                    self.object_where = self.ObjectWhere.weight;
-                    self.isExpertCubeName = cube.name;
-                    txtKG.setText("140g");
-                    txtKG.x = self.gSetting.txtKG.x - 30;
-                }
-            }
-            else if (cube === cube02) {
-                if (parseInt(cube.y) == cube_touch_y) {
-                    self.object_where = self.ObjectWhere.weight;
-                    self.isExpertCubeName = cube.name;
-                    txtKG.setText("240g");
-                    txtKG.x = self.gSetting.txtKG.x - 30;
-                }
-            }
-            else if (cube === cube03) {
-                if (parseInt(cube.y) == cube_touch_y) {
-                    self.object_where = self.ObjectWhere.weight;
-                    self.isExpertCubeName = cube.name;
-                    txtKG.setText("980g");
-                    txtKG.x = self.gSetting.txtKG.x - 30;
-                }
-            }
-            else if (cube === self.cube04) {
-                if (parseInt(cube.y) == cube_touch_y) {
-                    self.object_where = self.ObjectWhere.weight;
-                    self.isExpertCubeName = cube.name;
-                    txtKG.setText("100g");
-                    txtKG.x = self.gSetting.txtKG.x - 30;
-                }
+
+            if (parseInt(cube.y) == cube_touch_y) {
+                self.object_where = self.ObjectWhere.weight;
+                self.isExpertCubeName = cube.name;
+                txtKG.setText(self.gSetting["cubes"][cube.name].weight);
+                txtKG.x = self.gSetting.txtKG.x - 30;
             }
             else {
                 self.object_where = self.ObjectWhere.default;
