@@ -350,6 +350,7 @@ export default class MainScene extends Phaser.Scene {
                         self.object_where = self.ObjectWhere.water;
 
                         self.cube04.body.setAllowGravity(false);
+                        self.cube04.body.stop();//這行一定要加，不然cube會一直偷偷往上漂
                         self.cube04.input.draggable = false;
                         self.sys.tweens.add({
                             //this.systems.game.scene.scenes[0].tweens.add({
@@ -357,11 +358,17 @@ export default class MainScene extends Phaser.Scene {
                             y: 530,
                             duration: 1500,
                             ease: 'Back',
-                            easeParams: [2.5],
-                            delay: 8,
-                            onComplete: function () { self.cube04.input.draggable = true; }
+                            easeParams: [2],
+                            delay: 10,
+                            onComplete: function () { 
+                                self.cube04.input.draggable = true;
+                                self.sys.tweens.killTweensOf(self.cube04);
+                                self.sys.tweens.killAll();
+                            }
+                            
+                            
                         });
-                        self.sys.tweens.killAll();
+
                         //this.systems.game.scene.scenes[0].tweens.killAll();
 
                     }
