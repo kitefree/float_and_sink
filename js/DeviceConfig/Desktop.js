@@ -79,7 +79,7 @@ const rulerDetail = {
 //button
 const btnReset = {
     x: 700,
-    y: 400
+    y: 250
 }
 
 //weigh
@@ -98,8 +98,8 @@ const txtKG = {
 }
 
 const txtOpTips = {
-    x: 500,
-    y: 300,
+    x: 470,
+    y: 150,
     defaultText: '',
     fontSize: '52px'
 }
