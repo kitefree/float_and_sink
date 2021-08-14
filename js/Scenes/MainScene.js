@@ -493,35 +493,17 @@ export default class MainScene extends Phaser.Scene {
 
 
         function display_tips(isShow = false) {
-            self.isDisplayTips = isShow;
+            self.isDisplayTips = isShow;            
+
             if (isShow == true) {
-                if (cube01.name != self.isExpertCubeName) {
-                    cube01.input.draggable = false;
-                }
-                else {
-                    cube01.input.draggable = true;
-                }
-
-                if (cube02.name != self.isExpertCubeName) {
-                    cube02.input.draggable = false;
-                }
-                else {
-                    cube02.input.draggable = true;
-                }
-
-                if (cube03.name != self.isExpertCubeName) {
-                    cube03.input.draggable = false;
-                }
-                else {
-                    cube03.input.draggable = true;
-                }
-
-                if (self.cube04.name != self.isExpertCubeName) {
-                    self.cube04.input.draggable = false;
-                }
-                else {
-                    self.cube04.input.draggable = true;
-                }
+                self.arrCubes.forEach(function (cube) {
+                    if (cube.name != self.isExpertCubeName) {
+                        cube.input.draggable = false;
+                    }
+                    else {
+                        cube.input.draggable = true;
+                    }
+                });
 
 
                 txtOpTips.setText("請先將物體移動回架上");
