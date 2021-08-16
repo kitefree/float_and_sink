@@ -56,6 +56,23 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('magnify-out', 'assets/outside.png');
         this.load.image('magnify-in', 'assets/inside.png');
         this.load.image('restart', 'assets/restart.png');
+
+        // 創建 text
+        let percentText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, '', {
+            font: '52px Open Sans',
+            fill: '#ffffff'
+        }).setOrigin(0.5, 0.5)
+
+        // 偵聽處理檔案
+        this.load.on('progress', value => {
+            percentText.setText(parseInt(value * 100) + '%')
+        })
+
+        // 偵聽載入檔案結束
+        this.load.on('complete', () => {
+            percentText.destroy()		// 載入完，把它從畫面上清除
+        })
+
     }
 
     create() {
@@ -239,7 +256,7 @@ export default class MainScene extends Phaser.Scene {
         self.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 
             self.isDragging = true;
-            
+
             this.systems.game.input.setCursor({ cursor: 'grabbing' });
             if (gameObject.name == 'magnify') {
                 lense.x = dragX;
@@ -263,7 +280,7 @@ export default class MainScene extends Phaser.Scene {
                     txtCubeInfo.y = pointer.y;
                     txtKG.setText("0g");
                     txtKG.x = self.gSetting.txtKG.x;
-                    
+
                 }
             }
 
@@ -320,33 +337,31 @@ export default class MainScene extends Phaser.Scene {
                 }
 
                 //超過這個座標，就判定有物件在右邊                
-                if (gameObject.x > 554 )
-                {
+                if (gameObject.x > 554) {
                     self.isExpertCubeName = gameObject.name;
 
                     self.arrCubes.forEach(function (cube) {
-                        (cube.name == gameObject.name) ? cube.input.draggable = true : cube.input.draggable = false;                       
-                        (cube.name == gameObject.name) ? cube.alpha = 1 : cube.alpha = 0.2;                                                                       
+                        (cube.name == gameObject.name) ? cube.input.draggable = true : cube.input.draggable = false;
+                        (cube.name == gameObject.name) ? cube.alpha = 1 : cube.alpha = 0.2;
                     });
 
                 }
-                else 
-                {
+                else {
                     self.isExpertCubeName = '';
 
                     self.arrCubes.forEach(function (cube) {
-                        cube.input.draggable = true;                        
-                        cube.alpha = 1;  
+                        cube.input.draggable = true;
+                        cube.alpha = 1;
                     });
                 }
 
                 if (gameObject.name == 'cube04') {
 
-                    
+
                     //因為有做動畫所以要特別判斷是否在水的區段
                     if (gameObject.x > 588 && gameObject.x < 813) {
 
-                  
+
                         self.object_where = self.ObjectWhere.water;
 
                         self.cube04.body.setAllowGravity(false);
@@ -360,19 +375,19 @@ export default class MainScene extends Phaser.Scene {
                             ease: 'Back',
                             easeParams: [2],
                             delay: 10,
-                            onComplete: function () { 
+                            onComplete: function () {
                                 self.cube04.input.draggable = true;
                                 self.sys.tweens.killTweensOf(self.cube04);
                                 self.sys.tweens.killAll();
                             }
-                            
-                            
+
+
                         });
 
                         //this.systems.game.scene.scenes[0].tweens.killAll();
 
                     }
-                    else {                     
+                    else {
                         self.object_where = self.ObjectWhere.default;
                         gameObject.body.setAllowGravity(true);
                     }
@@ -425,8 +440,8 @@ export default class MainScene extends Phaser.Scene {
                 txtCubeInfo.x = pointer.x;
                 txtCubeInfo.y = pointer.y;
 
-                
-                
+
+
 
             }
             else {
@@ -456,7 +471,7 @@ export default class MainScene extends Phaser.Scene {
             txtKG.x = self.gSetting.txtKG.x;
             self.rect_water.y = self.gSetting.water.y;
             self.rect_water_ruler.y = self.gSetting.water_ruler.y;
-            
+
         }
 
 
@@ -480,7 +495,7 @@ export default class MainScene extends Phaser.Scene {
 
         function update_water_info(cube) {
 
-            if (self.object_where == self.ObjectWhere.water) {            
+            if (self.object_where == self.ObjectWhere.water) {
                 return;
             }
 
@@ -493,8 +508,8 @@ export default class MainScene extends Phaser.Scene {
                 if ((cube.x < 588 || cube.x > 813) && self.isDisplayTips == false) {
 
                     self.object_where = self.ObjectWhere.default;
-                    
-                
+
+
 
                     self.tweens.add({
 
@@ -510,8 +525,8 @@ export default class MainScene extends Phaser.Scene {
             else if (self.RectangleToRectangle(self.rect1, self.rect2)) {
 
                 self.object_where = self.ObjectWhere.water;
-                
-                
+
+
                 if (self.rect_water.y == self.gSetting.water.y) {
 
                     self.tweens.add({
@@ -527,8 +542,8 @@ export default class MainScene extends Phaser.Scene {
             }
             else {
                 self.object_where = self.ObjectWhere.default;
-                
-                
+
+
                 self.tweens.add({
 
                     targets: [self.rect_water, self.rect_water_ruler],
