@@ -2,17 +2,20 @@
 import Phaser from 'phaser';
 import { TabletConfig } from '../DeviceConfig/Tablet';
 import { DesktopConfig } from '../DeviceConfig/Desktop';
-import ImgReset from '../assets/reset.png';
-import ImgCube01 from '../assets/cube01.png';
+import ImgReset from '../assets/reset-new.png';
+import ImgCube01 from '../assets/cube1.png';
+import ImgCube02 from '../assets/cube2.png';
+import ImgCube03 from '../assets/cube3.png';
+import ImgCube04 from '../assets/cube4.png';
 import ImgPlatform from '../assets/platform.png';
-import ImgXLine from '../assets/x_line.png';
-import ImgYLine from '../assets/y_line.png';
-import ImgWeigh from '../assets/weigh.png';
-import ImgRuler from '../assets/ruler.png';
-import ImgRulerDetail from '../assets/ruler_detail.png';
-import ImgOutside from '../assets/outside.png';
+import ImgXLine from '../assets/x_line-new.png';
+import ImgYLine from '../assets/y_line-new.png';
+import ImgWeigh from '../assets/weigh-new2.png';
+import ImgRuler from '../assets/ruler-new.png';
+import ImgRulerDetail from '../assets/ruler_detail-new.png';
+import ImgOutside from '../assets/outside-new.png';
 import ImgInside from '../assets/inside.png';
-import ImgRestart from '../assets/restart.png';
+import ImgRestart from '../assets/restart-new.png';
 
 
 
@@ -61,7 +64,10 @@ export default class MainScene extends Phaser.Scene {
 
         this.load.image('btnReset', ImgReset);
         //this.load.image('cube', 'assets/cube.png');
-        this.load.image('cube_template', ImgCube01);
+        this.load.image('cube01', ImgCube01);
+        this.load.image('cube02', ImgCube02);
+        this.load.image('cube03', ImgCube03);
+        this.load.image('cube04', ImgCube04);
         //this.load.spritesheet('cube01', 'assets/cube01.png', { frameWidth: 144, frameHeight: 121 });
         //this.load.spritesheet('cube02', 'assets/cube02.png', { frameWidth: 123, frameHeight: 141 });
         this.load.image('ground', ImgPlatform);
@@ -197,22 +203,22 @@ export default class MainScene extends Phaser.Scene {
         txtCubeInfo.setDepth(3);
 
         //cube01
-        cube01 = self.physics.add.sprite(self.gSetting.cubes.cube01.x, self.gSetting.cubes.cube01.y, 'cube_template');
+        cube01 = self.physics.add.sprite(self.gSetting.cubes.cube01.x, self.gSetting.cubes.cube01.y, 'cube01');
         cube01.name = "cube01";
 
 
         //cube02
-        cube02 = self.physics.add.sprite(self.gSetting.cubes.cube02.x, self.gSetting.cubes.cube02.y, 'cube_template');
+        cube02 = self.physics.add.sprite(self.gSetting.cubes.cube02.x, self.gSetting.cubes.cube02.y, 'cube02');
         cube02.name = "cube02";
 
 
         //cube03
-        cube03 = self.physics.add.sprite(self.gSetting.cubes.cube03.x, self.gSetting.cubes.cube03.y, 'cube_template');
+        cube03 = self.physics.add.sprite(self.gSetting.cubes.cube03.x, self.gSetting.cubes.cube03.y, 'cube03');
         cube03.name = "cube03";
 
 
         //cube04
-        self.cube04 = self.physics.add.sprite(self.gSetting.cubes.cube04.x, self.gSetting.cubes.cube04.y, 'cube_template');
+        self.cube04 = self.physics.add.sprite(self.gSetting.cubes.cube04.x, self.gSetting.cubes.cube04.y, 'cube04');
         self.cube04.name = "cube04";
 
 

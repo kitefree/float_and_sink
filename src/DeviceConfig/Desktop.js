@@ -115,9 +115,9 @@ const txtCubeInfo = {
 const water = {
     x:700,
     y:800,
-    width:370,
+    width:390,
     height:500,
-    color:0xd4f1f9
+    color:0xbee8ff
 }
 const water_ruler = {
     x:955,

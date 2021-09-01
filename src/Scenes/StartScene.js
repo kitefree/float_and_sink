@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import { TabletConfig } from '../DeviceConfig/Tablet';
 import { DesktopConfig } from '../DeviceConfig/Desktop';
-import ImgStart from '../assets/start_game.png';
+import ImgStart from '../assets/start_game-new.png';
 export default class StartScene extends Phaser.Scene {
 
     constructor(key) {
