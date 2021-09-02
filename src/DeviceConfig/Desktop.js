@@ -73,7 +73,7 @@ const ruler = {
 const rulerDetail = {
     x: 955,
     y: 590,
-    scale: 1.1
+    scale: 1.3
 }
 
 //button
@@ -91,9 +91,9 @@ const weigh = {
 const txtKG = {
 
     x: 1165,
-    y: 325,
+    y: 312,
     defaultText: '0g',
-    fontSize: '52px'
+    fontSize: '50px'
 
 }
 

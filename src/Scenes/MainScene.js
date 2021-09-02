@@ -172,7 +172,7 @@ export default class MainScene extends Phaser.Scene {
         const magnify = self.add.image(1200, 600, 'magnify-out').setInteractive();
         magnify.name = 'magnify';
         self.input.setDraggable(magnify);
-
+        magnify.setDepth(99);
 
 
         //秤重器
@@ -250,16 +250,16 @@ export default class MainScene extends Phaser.Scene {
         });
 
 
-        //water
+        //水
         //self.rect_water = this.add.rectangle(700, 590, 367, 157, 0xd4f1f9);
         self.rect_water = this.add.rectangle(self.gSetting.water.x, self.gSetting.water.y, self.gSetting.water.width, self.gSetting.water.height, self.gSetting.water.color);
         self.rect_water.alpha = 0.5;
         self.rect_water.setDepth(-1);
 
-
+        //尺規水
         self.rect_water_ruler = this.add.rectangle(self.gSetting.water_ruler.x, self.gSetting.water_ruler.y, self.gSetting.water_ruler.width, self.gSetting.water_ruler.height, self.gSetting.water_ruler.color);
         self.rect_water_ruler.alpha = 0.5;
-        self.rect_water_ruler.setDepth(2);
+        
 
 
         //drag start event
@@ -300,8 +300,7 @@ export default class MainScene extends Phaser.Scene {
         //drag end event
         self.input.on('dragend', function (pointer, gameObject) {
 
-            self.isDragging = false;
-
+            self.isDragging = false;            
             if (gameObject.name == 'magnify') {
                 lense.x = pointer.x;
                 lense.y = pointer.y;
@@ -572,7 +571,7 @@ export default class MainScene extends Phaser.Scene {
         function weight_event(cube, b) {
 
             //console.log(cube.y);
-            let cube_touch_y = 204;
+            let cube_touch_y = 187;
 
             if (parseInt(cube.y) == cube_touch_y) {
                 self.object_where = self.ObjectWhere.weight;
