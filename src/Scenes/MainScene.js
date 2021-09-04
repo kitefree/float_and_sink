@@ -258,7 +258,7 @@ export default class MainScene extends Phaser.Scene {
 
         //尺規水
         self.rect_water_ruler = this.add.rectangle(self.gSetting.water_ruler.x, self.gSetting.water_ruler.y, self.gSetting.water_ruler.width, self.gSetting.water_ruler.height, self.gSetting.water_ruler.color);
-        self.rect_water_ruler.alpha = 0.5;
+        self.rect_water_ruler.alpha = 0.8;
         
 
 
@@ -299,7 +299,7 @@ export default class MainScene extends Phaser.Scene {
 
         //drag end event
         self.input.on('dragend', function (pointer, gameObject) {
-
+            console.log(gameObject.x,gameObject.y)
             self.isDragging = false;            
             if (gameObject.name == 'magnify') {
                 lense.x = pointer.x;
@@ -370,7 +370,12 @@ export default class MainScene extends Phaser.Scene {
                     //因為有做動畫所以要特別判斷是否在水的區段
                     if (gameObject.x > 588 && gameObject.x < 813) {
 
-
+                        if(gameObject.y >=290 && gameObject.y <= 500)
+                        {
+                            gameObject.x = 700;
+                            gameObject.y = 200;
+                        }
+                        
                         self.object_where = self.ObjectWhere.water;
 
                         self.cube04.body.setAllowGravity(false);
@@ -379,11 +384,11 @@ export default class MainScene extends Phaser.Scene {
                         self.sys.tweens.add({
                             //this.systems.game.scene.scenes[0].tweens.add({
                             targets: self.cube04,
-                            y: 530,
+                            y: 485,
                             duration: 1500,
                             ease: 'Back',
                             easeParams: [2],
-                            delay: 10,
+                            delay: 100,
                             onComplete: function () {
                                 self.cube04.input.draggable = true;
                                 self.sys.tweens.killTweensOf(self.cube04);
@@ -430,16 +435,16 @@ export default class MainScene extends Phaser.Scene {
             var text = "";
             switch (cube_name) {
                 case "cube01":
-                    text = 'cube01木塊';
+                    text = '木塊';
                     break;
                 case "cube02":
-                    text = 'cube02磚塊';
+                    text = '磚塊';
                     break;
                 case "cube03":
-                    text = 'cube03鐵塊';
+                    text = '鐵塊';
                     break;
                 case "cube04":
-                    text = 'cube04塑膠塊';
+                    text = '塑膠塊';
                     break;
             }
 
@@ -619,7 +624,7 @@ export default class MainScene extends Phaser.Scene {
                     this.tweens.add({
 
                         targets: [this.rect_water, this.rect_water_ruler],
-                        y: this.add_water_height(this, 10),
+                        y: this.add_water_height(this, this.gSetting["cubes"]['cube04'].water_height),
                         ease: 'Power2',
                         duration: 500,
                         onComplete: this.onCompleteHandler,

@@ -4,25 +4,25 @@ const cubes = {
         x: 100,
         y: 250,
         weight:'140g',
-        water_height:80,
+        water_height:76,
     },
     cube02: {
         x: 300,
         y: 250,
         weight:'240g',
-        water_height:60,
+        water_height:76,
     },
     cube03: {
         x: 300,
         y: 520,
         weight:'980g',
-        water_height:40,
+        water_height:76,
     },
     cube04: {
         x: 100,
         y: 520,
         weight:'100g',
-        water_height:20,
+        water_height:60.7,
     }
 }
 
@@ -66,14 +66,14 @@ const waterBox = {
 //ruler
 const ruler = {
     x: 955,
-    y: 590,
+    y: 565,
 }
 
 //ruler detail
 const rulerDetail = {
     x: 955,
-    y: 590,
-    scale: 1.3
+    y: 565,
+    scale: 1.05
 }
 
 //button
@@ -114,9 +114,9 @@ const txtCubeInfo = {
 
 const water = {
     x:700,
-    y:800,
+    y:685,
     width:390,
-    height:500,
+    height:250,
     color:0xbee8ff
 }
 const water_ruler = {
@@ -124,7 +124,7 @@ const water_ruler = {
     y:water.y,
     width:65,
     height:water.height,
-    color:water.color
+    color:0xbee8ff
 }
 
 
