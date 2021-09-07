@@ -181,9 +181,9 @@ export default class MainScene extends Phaser.Scene {
         self.weigh.setCollideWorldBounds(true);
         this.physics.add.collider(self.weigh, platforms);
 
-        self.txtSys = this.add.text(10, 10, `${window.screen.width} x ${window.screen.height}`);
-        self.txtSys.setFontSize('24px');
-        self.txtSys.setPadding(5, 5, 5, 5);
+        //self.txtSys = this.add.text(10, 10, `${window.screen.width} x ${window.screen.height}`);
+        //self.txtSys.setFontSize('24px');
+        //self.txtSys.setPadding(5, 5, 5, 5);
 
         //txtKG
         txtKG = self.add.text(self.gSetting.txtKG.x, self.gSetting.txtKG.y, self.gSetting.txtKG.defaultText);
@@ -604,8 +604,8 @@ export default class MainScene extends Phaser.Scene {
 
     update() {
 
-        this.txtSys.setText(`${window.screen.width} x ${window.screen.height}`);
-        this.txtSys.setText(this.isExpertCubeName);
+        //this.txtSys.setText(`${window.screen.width} x ${window.screen.height}`);
+        //this.txtSys.setText(this.isExpertCubeName);
 
         //console.log('update isExpertCubeName:', this.isExpertCubeName)
         if (this.isExpertCubeName == 'cube04') {
