@@ -73,7 +73,7 @@ const ruler = {
 const rulerDetail = {
     x: 955,
     y: 565,
-    scale: 1.05
+    scale: 2
 }
 
 //button

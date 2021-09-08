@@ -12,7 +12,6 @@ import ImgXLine from '../assets/x_line-new.png';
 import ImgYLine from '../assets/y_line-new.png';
 import ImgWeigh from '../assets/weigh-new2.png';
 import ImgRuler from '../assets/ruler-new.png';
-import ImgRulerDetail from '../assets/ruler_detail-new.png';
 import ImgRulerDetail2 from '../assets/ruler2.png';
 import ImgRulerDetail3 from '../assets/ruler3.png';
 import ImgRulerDetail4 from '../assets/ruler4.png';
@@ -80,8 +79,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('x_line', ImgXLine);
         this.load.image('y_line', ImgYLine);
         this.load.image('weigh', ImgWeigh);
-        this.load.image('ruler', ImgRuler);
-        this.load.image('ruler_detail', ImgRulerDetail);
+        this.load.image('ruler', ImgRuler);        
         this.load.image('ruler_detail2', ImgRulerDetail2);
         this.load.image('ruler_detail3', ImgRulerDetail3);
         this.load.image('ruler_detail4', ImgRulerDetail4);
@@ -167,10 +165,10 @@ export default class MainScene extends Phaser.Scene {
         platforms.create(self.gSetting.ruler.x, self.gSetting.ruler.y, 'ruler');//尺
 
 
-        self.pic = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail').setScale(self.gSetting.rulerDetail.scale);
-        self.pic2 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail2').setScale(2);
-        self.pic3 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail3').setScale(2);
-        self.pic4 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail4').setScale(2);
+        //self.pic = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail').setScale(self.gSetting.rulerDetail.scale);
+        self.pic2 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail2').setScale(self.gSetting.rulerDetail.scale);
+        self.pic3 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail3').setScale(self.gSetting.rulerDetail.scale);
+        self.pic4 = self.add.image(self.gSetting.rulerDetail.x, self.gSetting.rulerDetail.y, 'ruler_detail4').setScale(self.gSetting.rulerDetail.scale);
         const lense = self.make.sprite({
             x: 400,
             y: 300,
@@ -331,7 +329,7 @@ export default class MainScene extends Phaser.Scene {
 
         //drag end event
         self.input.on('dragend', function (pointer, gameObject) {
-            console.log(gameObject.x,gameObject.y)
+            //console.log(gameObject.x,gameObject.y)
             self.isDragging = false;            
             if (gameObject.name == 'magnify') {
                 lense.x = gameObject.x;
@@ -541,8 +539,8 @@ export default class MainScene extends Phaser.Scene {
 
         function update_ruler_detail_pic(){
             if(self.object_where == self.ObjectWhere.water)
-            {                    
-                console.log('in water')
+            {                   
+                
                 if(self.isExpertCubeName == '')
                 {
                     self.pic2.visible = true;
@@ -560,8 +558,7 @@ export default class MainScene extends Phaser.Scene {
                     self.pic4.visible = true;         
                 }
             }
-            else {
-                console.log('not in water')
+            else {                
                 self.pic2.visible = true;
                 self.pic3.visible = false;
                 self.pic4.visible = false;
