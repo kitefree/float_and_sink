@@ -334,10 +334,10 @@ export default class MainScene extends Phaser.Scene {
             console.log(gameObject.x,gameObject.y)
             self.isDragging = false;            
             if (gameObject.name == 'magnify') {
-                lense.x = pointer.x;
-                lense.y = pointer.y;
-                magnify.x = pointer.x;
-                magnify.y = pointer.y;
+                lense.x = gameObject.x;
+                lense.y = gameObject.y;
+                magnify.x = gameObject.x;
+                magnify.y = gameObject.y;
                 this.systems.game.input.resetCursor({ cursor: 'true' });
             }
             else {
