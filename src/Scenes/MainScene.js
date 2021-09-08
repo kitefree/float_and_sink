@@ -253,7 +253,7 @@ export default class MainScene extends Phaser.Scene {
         //水
         //self.rect_water = this.add.rectangle(700, 590, 367, 157, 0xd4f1f9);
         self.rect_water = this.add.rectangle(self.gSetting.water.x, self.gSetting.water.y, self.gSetting.water.width, self.gSetting.water.height, self.gSetting.water.color);
-        self.rect_water.alpha = 0.5;
+        self.rect_water.alpha = 0.8;
         self.rect_water.setDepth(-1);
 
         //尺規水
